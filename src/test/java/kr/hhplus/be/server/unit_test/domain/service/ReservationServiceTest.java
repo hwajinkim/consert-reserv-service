@@ -68,7 +68,7 @@ public class ReservationServiceTest {
         //given
         Long reservationId = 1L;
         Long seatId = 1L;
-        when(reservationRepository.findByReservationIdAndSeatId(reservationId, seatId)).thenThrow(new ReservationNotFoundException("예약 정보를 찾을 수 없습니다."));
+        when(reservationRepository.findByReservationIdAndSeatIdWithLock(reservationId, seatId)).thenThrow(new ReservationNotFoundException("예약 정보를 찾을 수 없습니다."));
 
         //when
         Exception exception = assertThrows(ReservationNotFoundException.class,

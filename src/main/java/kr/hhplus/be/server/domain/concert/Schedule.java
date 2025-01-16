@@ -1,6 +1,7 @@
 package kr.hhplus.be.server.domain.concert;
 
 import jakarta.persistence.*;
+import kr.hhplus.be.server.common.exception.LackRemainingTicketExcption;
 import kr.hhplus.be.server.domain.common.BaseEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -78,6 +79,10 @@ public class Schedule extends BaseEntity {
     }
 
     public Schedule update(Schedule schedule, int increaseOrDecreaseNumber) {
+        if(schedule.getRemainingTicket() < 1){
+            throw new LackRemainingTicketExcption("잔여 좌석이 없습니다.");
+        }
+
         int changeRemainingTicketNumber = schedule.getRemainingTicket() + increaseOrDecreaseNumber;
 
         return Schedule.builder()

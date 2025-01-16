@@ -1,5 +1,6 @@
 package kr.hhplus.be.server.domain.reservation;
 
+import kr.hhplus.be.server.common.exception.AlreadyExistsException;
 import kr.hhplus.be.server.common.exception.ReservationBadStatusException;
 import kr.hhplus.be.server.common.exception.ReservationNotFoundException;
 import kr.hhplus.be.server.domain.concert.Seat;
@@ -17,12 +18,19 @@ public class ReservationService {
     private final ReservationRepository reservationRepository;
 
     public Reservation creatSeatReservation(Seat seat, Long userId) {
-        Reservation createdReservation =  new Reservation().create(seat, userId);
-        return reservationRepository.save(createdReservation);
+        Reservation reservation = reservationRepository.findBySeatId(seat.getId());
+        Reservation savedReservation = null;
+        if(reservation == null){
+            Reservation createdReservation =  new Reservation().create(seat, userId);
+            savedReservation =  reservationRepository.save(createdReservation);
+        } else {
+            throw new AlreadyExistsException("이미 등록된 예약입니다.");
+        }
+        return savedReservation;
     }
 
     public Reservation updateReservation(Long reservationId, Long seatId) {
-         Reservation reservation = reservationRepository.findByReservationIdAndSeatId(reservationId, seatId)
+         Reservation reservation = reservationRepository.findByReservationIdAndSeatIdWithLock(reservationId, seatId)
                 .orElseThrow(()-> new ReservationNotFoundException("예약 정보를 찾을 수 없습니다."));
 
          if(reservation.getReservationState().equals(ReservationState.PANDING)){

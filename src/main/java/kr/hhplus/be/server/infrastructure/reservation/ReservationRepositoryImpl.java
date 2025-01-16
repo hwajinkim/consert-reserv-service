@@ -20,12 +20,17 @@ public class ReservationRepositoryImpl implements ReservationRepository {
     }
 
     @Override
-    public Optional<Reservation> findByReservationIdAndSeatId(Long reservationId, Long seatId) {
-        return reservationJpaRepository.findByIdAndSeatId(reservationId, seatId);
+    public Optional<Reservation> findByReservationIdAndSeatIdWithLock(Long reservationId, Long seatId) {
+        return reservationJpaRepository.findByReservationIdAndSeatIdWithLock(reservationId, seatId);
     }
 
     @Override
     public List<Reservation> findExpiredReservation(LocalDateTime now) {
         return reservationJpaRepository.findExpiredReservation(now);
+    }
+
+    @Override
+    public Reservation findBySeatId(Long seatId) {
+        return reservationJpaRepository.findBySeatId(seatId);
     }
 }

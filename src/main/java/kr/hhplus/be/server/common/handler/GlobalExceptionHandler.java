@@ -65,7 +65,19 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
-        @ExceptionHandler(Exception.class)
+    @ExceptionHandler(AlreadyExistsException.class)
+    public ResponseEntity<ErrorResponse> handleAlreadyExistsException(AlreadyExistsException ex){
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(LackRemainingTicketExcption.class)
+    public ResponseEntity<ErrorResponse> handleLackRemainingTicketExcption(LackRemainingTicketExcption ex){
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGeneralException(Exception ex){
         ErrorResponse errorResponse = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), "An unexpected error occurred.");
         return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
