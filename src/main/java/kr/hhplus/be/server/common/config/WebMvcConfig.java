@@ -1,5 +1,7 @@
-package kr.hhplus.be.server.common.handler;
+package kr.hhplus.be.server.common.config;
 
+import kr.hhplus.be.server.common.handler.QueueCreateInterceptor;
+import kr.hhplus.be.server.common.handler.QueueInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
