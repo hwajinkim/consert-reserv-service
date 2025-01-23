@@ -15,8 +15,8 @@
  + Swagger API
 ![swagger_초안](https://github.com/user-attachments/assets/66324070-b637-40cd-934b-8db6993eb919)
 
-
-
+## 동시성 제어 방식 분석
+[동시성 제어 방식 분석 보고서](https://github.com/hwajinkim/concert-reserve-service/blob/feature/dev/docs/concurrency-controller/%EB%8F%99%EC%8B%9C%EC%84%B1%EC%A0%9C%EC%96%B4_%EB%B6%84%EC%84%9D_%EB%B3%B4%EA%B3%A0%EC%84%9C.md)
 
 <!-- 6. [아키텍처 구조]()--> 
 
