@@ -1,4 +1,4 @@
-
+version: '3'
 services:
   mysql:
     image: mysql:8.0
@@ -11,6 +11,26 @@ services:
       - MYSQL_DATABASE=hhplus
     volumes:
       - ./data/mysql/:/var/lib/mysql
+    networks:
+      - my-network
+
+  mysql_2:
+    image: mysql:8.0
+    ports:
+      - "3308:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=application
+      - MYSQL_PASSWORD=application
+      - MYSQL_DATABASE=hhplus
+    volumes:
+      - ./data/mysql_2/:/var/lib/mysql
+      - ./dummy/:/docker-entrypoint-initdb.d
+      - ./dummy/csv/:/dummy/csv/
+    user: "999:999"
+    command: --secure-file-priv=
+    networks:
+      - my-network
 
   redis:
     image: redis:latest
@@ -19,15 +39,6 @@ services:
     networks:
       - my-network
 
----
-services:
-  redis:
-    image: redis
-    container_name: redis
-    ports:
-      - "6378:6378"
-
 networks:
-  default:
-    driver: bridge
   my-network:
+    driver: bridge
